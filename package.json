@@ -1,0 +1,27 @@
+{
+  "name": "final-proj",
+  "version": "1.0.0",
+  "description": "Group 14 cs-290 final project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osu-cs290-sp20/final-project-team-14.git"
+  },
+  "author": "Group 14",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/osu-cs290-sp20/final-project-team-14/issues"
+  },
+  "homepage": "https://github.com/osu-cs290-sp20/final-project-team-14#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
