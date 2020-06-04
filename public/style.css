@@ -1,0 +1,25 @@
+body {
+
+    margin: 0px;
+    background-color: white;
+    font-family: 'Roboto', 'sans-serif';
+
+}
+
+.titleBar {
+
+    padding: 15px;
+    background-color: #5D6D7E;
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+
+}
+
+.accessBar {
+
+    padding: 15px;
+    background-color: #2E373F;
+    color: white;
+
+}
