@@ -6,6 +6,13 @@ body {
 
 }
 
+a {
+
+    text-decoration: none;
+    color: white;
+
+}
+
 .titleBar {
 
     padding: 15px;
@@ -16,10 +23,41 @@ body {
 
 }
 
-.accessBar {
+.navBar {
 
-    padding: 15px;
+    padding: 5px;
     background-color: #2E373F;
     color: white;
+    position: sticky;
+
+}
+
+.navItem {
+
+    display: inline-block;
+
+}
+
+.navButton {
+
+    border: none;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+
+}
+
+.listingsContainer {
+
+    padding: 5px;
+    display: flexbox;
+
+}
+
+.bookListing {
+
+    margin: 10px;
+    padding: 5px;
+    background-color: lightgray;
 
 }
