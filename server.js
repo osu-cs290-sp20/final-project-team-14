@@ -14,8 +14,11 @@ app.use(express.static('public'))
 
 app.get('/', function(req, res) {
 
-    res.status(200).render('testPage', {
-        message: "hello there"
+    res.status(200).render('listingsPage', {
+        listings: [
+            {name: "a"},
+            {name: "b"}
+        ]
     });
     
 });
