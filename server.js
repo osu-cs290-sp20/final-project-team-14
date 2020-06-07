@@ -58,6 +58,12 @@ app.get('/requests', function (req, res) {
 
 });
 
+app.get('/about', function (req, res) {
+
+  res.status(200).render('aboutPage');
+
+});
+
 app.listen(port, function() {
 
     console.log("Server is listening on port: ", port);
