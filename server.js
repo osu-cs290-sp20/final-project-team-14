@@ -16,11 +16,52 @@ app.get('/', function(req, res) {
 
     res.status(200).render('listingsPage', {
         listings: [
-            {name: "a"},
-            {name: "b"}
+          {
+            bookTitle: "Matrix and Power Series Methods",
+            bookClass: "Math 264",
+            bookCondition: "Great",
+            bookPrice: "30",
+            contact: "student123@oregonstate.edu",
+            url: "https://images-na.ssl-images-amazon.com/images/I/5145i7M5WXL._SX384_BO1,204,203,200_.jpg"
+          },
+          {
+            bookTitle: "Physics for Scientists and Engineers, 4th Edition",
+            bookClass: "Physics 213",
+            bookCondition: "Good",
+            bookPrice: "50",
+            contact: "123-456-7891",
+            url: "https://images-na.ssl-images-amazon.com/images/I/51t2fjcF43L._SX412_BO1,204,203,200_.jpg"
+          }
         ]
     });
-    
+
+});
+
+app.get('/requests', function (req, res) {
+
+  res.status(200).render('requestsPage', {
+    requests: [
+      {
+        bookTitle: "Matrix and Power Series Methods",
+        bookClass: "Math 264",
+        contact: "student123@oregonstate.edu",
+        url: "https://images-na.ssl-images-amazon.com/images/I/5145i7M5WXL._SX384_BO1,204,203,200_.jpg"
+      },
+      {
+        bookTitle: "Physics for Scientists and Engineers, 4th Edition",
+        bookClass: "Physics 213",
+        contact: "123-456-7891",
+        url: "https://images-na.ssl-images-amazon.com/images/I/51t2fjcF43L._SX412_BO1,204,203,200_.jpg"
+      }
+    ]
+  });
+
+});
+
+app.get('/about', function (req, res) {
+
+  res.status(200).render('aboutPage');
+
 });
 
 app.listen(port, function() {
