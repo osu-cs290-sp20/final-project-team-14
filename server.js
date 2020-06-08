@@ -19,7 +19,9 @@ app.get('/', function(req, res) {
 
     res.status(200).render('page', {
         pageTitle: "Listings",
-        listings: listings_data
+        listings: listings_data,
+        logged_in: false,
+        aboutPage: false
     });
 
 });
@@ -28,7 +30,9 @@ app.get('/requests', function (req, res) {
 
   res.status(200).render('page', {
     pageTitle: "Requests",
-    listings: requests_data
+    listings: requests_data,
+    logged_in: false,
+    aboutPage: false
   });
 
 });
@@ -36,10 +40,13 @@ app.get('/requests', function (req, res) {
 app.get('/listings/:user', function (req, res) {
 
   res.status(200).render('page', {
-    pageTitle: "My Requests",
+    pageTitle: "My Listings",
     listings: listings_data.filter(function(obj) {
       return obj.user == req.params.user;
-    })
+    }),
+    logged_in: true,
+    user: req.params.user,
+    aboutPage: false
   });
 
 });
@@ -50,14 +57,56 @@ app.get('/requests/:user', function (req, res) {
     pageTitle: "My Requests",
     listings: requests_data.filter(function(obj) {
       return obj.user == req.params.user;
-    })
+    }),
+    logged_in: true,
+    user: req.params.user,
+    aboutPage: false
+  });
+
+});
+
+app.get('/home/:user', function (req, res) {
+
+  res.status(200).render('page', {
+    pageTitle: "Listings",
+    listings: requests_data,
+    logged_in: true,
+    user: req.params.user,
+    aboutPage: false
+  });
+
+});
+
+app.get('/homeRequests/:user', function (req, res) {
+
+  res.status(200).render('page', {
+    pageTitle: "Requests",
+    listings: requests_data,
+    logged_in: true,
+    user: req.params.user,
+    aboutPage: false
   });
 
 });
 
 app.get('/about', function (req, res) {
 
-  res.status(200).render('aboutPage');
+  res.status(200).render('page', {
+    pageTitle: "About",
+    logged_in: false,
+    aboutPage: true
+  });
+
+});
+
+app.get('/about/:user', function (req, res) {
+
+  res.status(200).render('page', {
+    pageTitle: "About",
+    logged_in: true,
+    user: req.params.user,
+    aboutPage: true
+  });
 
 });
 
