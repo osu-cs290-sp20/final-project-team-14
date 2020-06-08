@@ -4,6 +4,9 @@ var exphbs = require('express-handlebars');
 var app = express();
 var port = process.env.port || 3000;
 
+var listings_data = require("./book_data/listings.json");
+var requests_data = require("./book_data/requests.json");
+
 app.engine('handlebars', exphbs({
     defaultLayout: 'main'
 }));
@@ -14,46 +17,40 @@ app.use(express.static('public'))
 
 app.get('/', function(req, res) {
 
-    res.status(200).render('listingsPage', {
-        listings: [
-          {
-            bookTitle: "Matrix and Power Series Methods",
-            bookClass: "Math 264",
-            bookCondition: "Great",
-            bookPrice: "30",
-            contact: "student123@oregonstate.edu",
-            url: "https://images-na.ssl-images-amazon.com/images/I/5145i7M5WXL._SX384_BO1,204,203,200_.jpg"
-          },
-          {
-            bookTitle: "Physics for Scientists and Engineers, 4th Edition",
-            bookClass: "Physics 213",
-            bookCondition: "Good",
-            bookPrice: "50",
-            contact: "123-456-7891",
-            url: "https://images-na.ssl-images-amazon.com/images/I/51t2fjcF43L._SX412_BO1,204,203,200_.jpg"
-          }
-        ]
+    res.status(200).render('page', {
+        pageTitle: "Listings",
+        listings: listings_data
     });
 
 });
 
 app.get('/requests', function (req, res) {
 
-  res.status(200).render('requestsPage', {
-    requests: [
-      {
-        bookTitle: "Matrix and Power Series Methods",
-        bookClass: "Math 264",
-        contact: "student123@oregonstate.edu",
-        url: "https://images-na.ssl-images-amazon.com/images/I/5145i7M5WXL._SX384_BO1,204,203,200_.jpg"
-      },
-      {
-        bookTitle: "Physics for Scientists and Engineers, 4th Edition",
-        bookClass: "Physics 213",
-        contact: "123-456-7891",
-        url: "https://images-na.ssl-images-amazon.com/images/I/51t2fjcF43L._SX412_BO1,204,203,200_.jpg"
-      }
-    ]
+  res.status(200).render('page', {
+    pageTitle: "Requests",
+    listings: requests_data
+  });
+
+});
+
+app.get('/listings/:user', function (req, res) {
+
+  res.status(200).render('page', {
+    pageTitle: "My Requests",
+    listings: listings_data.filter(function(obj) {
+      return obj.user == req.params.user;
+    })
+  });
+
+});
+
+app.get('/requests/:user', function (req, res) {
+
+  res.status(200).render('page', {
+    pageTitle: "My Requests",
+    listings: requests_data.filter(function(obj) {
+      return obj.user == req.params.user;
+    })
   });
 
 });
