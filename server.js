@@ -69,7 +69,7 @@ app.get('/home/:user', function (req, res) {
 
   res.status(200).render('page', {
     pageTitle: "Listings",
-    listings: requests_data,
+    listings: listings_data,
     logged_in: true,
     user: req.params.user,
     aboutPage: false

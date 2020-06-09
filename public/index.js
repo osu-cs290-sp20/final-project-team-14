@@ -63,3 +63,59 @@ function handleLogout() {
   window.location.href = "/";
 
 }
+
+function adjustDOM(sortedList) {
+  for(var i = 0; i < sortedList.length; i++) {
+    var parent = sortedList[i].parentNode;
+    var removedItem = parent.removeChild(sortedList[i]);
+    parent.appendChild(removedItem);
+  }
+} 
+
+var sortTitle = document.getElementById('sortTitle');
+if(sortTitle) {
+  sortTitle.addEventListener('click', function() {
+    var listings = Array.prototype.slice.call(document.getElementsByClassName('bookListing'));
+    if(listings.length <= 1) return;
+    listings.sort(function(a, b) {
+      var title0 = a.getElementsByClassName('book-title')[0].textContent.substring(12).toUpperCase();
+      var title1 = b.getElementsByClassName('book-title')[0].textContent.substring(12).toUpperCase();
+      if(title0 < title1) return -1;
+      else if(title1 < title0) return 1;
+      else return 0;     
+    });
+    adjustDOM(listings);
+  });
+}
+
+var sortClass = document.getElementById('sortClass');
+if(sortClass) {
+  sortClass.addEventListener('click', function() {
+    var listings = Array.prototype.slice.call(document.getElementsByClassName('bookListing'));
+    if(listings.length <= 1) return;
+    listings.sort(function(a, b) {
+      var class0 = a.getElementsByClassName('book-class')[0].textContent.substring(7);
+      var class1 = b.getElementsByClassName('book-class')[0].textContent.substring(7);
+      if(class0 < class1) return -1;
+      else if(class1 < class0) return 1;
+      else return 0;     
+    });
+    adjustDOM(listings);
+  });
+}
+
+var sortPrice = document.getElementById('sortPrice');
+if(sortPrice) {
+  sortPrice.addEventListener('click', function() {
+    var listings = Array.prototype.slice.call(document.getElementsByClassName('bookListing'));
+    if(listings.length <= 1) return;
+    listings.sort(function(a, b) {
+      var price0 = a.getElementsByClassName('book-price')[0].textContent.substring(8);
+      var price1 = b.getElementsByClassName('book-price')[0].textContent.substring(8);
+      if(price0 < price1) return -1;
+      else if(price1 < price0) return 1;
+      else return 0;     
+    });
+    adjustDOM(listings);
+  });
+}
