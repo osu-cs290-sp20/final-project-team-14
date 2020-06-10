@@ -1,12 +1,40 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
 var fs = require('fs');
+var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+
+
+var Http = new XMLHttpRequest();
+var oAuth2URL = "https://api.oregonstate.edu/oauth2/token";
+var textbookURL = "https://api.oregonstate.edu/v1/textbooks";
+
 
 var app = express();
 var port = process.env.port || 3000;
 
 var listings_data = require("./book_data/listings.json");
 var requests_data = require("./book_data/requests.json");
+
+var key_data;
+try{
+	key_data = require("./keys.json");
+} catch (error){
+	key_data = "";
+}
+
+Http.open("POST", oAuth2URL, true);
+var requestData = "client_id=" + key_data["consumerKey"] + "&client_secret=" + key_data["consumerSecret"] + "&grant_type=client_credentials";
+
+Http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+ 
+Http.send(requestData);
+
+Http.onreadystatechange=(e)=>{
+	console.log(Http.responseText);
+}
+
+
+
 
 app.engine('handlebars', exphbs({
     defaultLayout: 'main'
