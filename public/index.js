@@ -1,3 +1,5 @@
+listingArray = [];
+
 var loginButton = document.getElementById("loginButton");
 if(loginButton) {
   loginButton.addEventListener('click', toggleLoginModal);
@@ -21,6 +23,9 @@ var logoutButton = document.getElementById("logoutButton");
 if(logoutButton) {
   logoutButton.addEventListener('click', handleLogout);
 }
+
+var searchBar = document.getElementById("navbar-search-input");
+searchBar.addEventListener('keyup', searchListings);
 
 function toggleLoginModal() {
 
@@ -119,3 +124,48 @@ if(sortPrice) {
     adjustDOM(listings);
   });
 }
+
+function parseListing(elem) {
+  var listTitle = elem.getElementsByClassName("book-title")[0].textContent.trim().replace("Book Title: ","").toLowerCase();
+  var listClass = elem.getElementsByClassName("book-class")[0].textContent.trim().replace("Class: ","").toLowerCase();
+  var listCon = elem.getElementsByClassName("book-condition")[0].textContent.trim().replace("Condition: ","").toLowerCase();
+  var listPrice = elem.getElementsByClassName("book-price")[0].textContent.trim().replace("Price: $","").toLowerCase();
+  var listContact = elem.getElementsByClassName("contact")[0].textContent.trim().replace("Contact: ","").toLowerCase();
+  var text = listTitle + " " + listClass + " " + listCon + " " + listPrice + " " + listContact;
+  return text;
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  var listHTML = document.getElementsByClassName('bookListing');
+  for (var i = 0; i < listHTML.length; i++) {
+    listingArray.push(listHTML[i]);
+  }
+});
+
+function refreshListings() { 	
+  var container = document.getElementsByClassName('listingsContainer');
+  for (var i = 0; i < listingArray.length; i++) {
+    container[0].appendChild(listingArray[i]);
+  }
+}
+
+function searchListings() {
+  var container = document.getElementsByClassName('listingsContainer');
+  var searchInput = document.getElementById('navbar-search-input').value;
+  refreshListings();
+  if (searchInput != "") {
+    searchInput = searchInput.toLowerCase();
+    var tempString = null;
+    for (var i = 0; i <listingArray.length; i++) {
+      tempString = parseListing(listingArray[i]);
+      if (tempString.includes(searchInput)) {
+        continue;
+      }
+      else {
+        container[0].removeChild(listingArray[i]);      
+      }
+    } 
+  }   
+}      
+       
+
