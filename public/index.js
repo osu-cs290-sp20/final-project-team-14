@@ -34,6 +34,16 @@ if(requestButton) {
   requestButton.addEventListener('click', requestPostType);
 }
 
+var createListingButton = document.querySelector(".create-listing-button");
+if(createListingButton) {
+  createListingButton.addEventListener('click', addListing);
+}
+
+var createRequestButton = document.querySelector(".create-request-button");
+if(createRequestButton) {
+  createRequestButton.addEventListener('click', addRequest);
+}
+
 var searchBar = document.getElementById("navbar-search-input");
 searchBar.addEventListener('keyup', searchListings);
 
@@ -97,6 +107,94 @@ function requestPostType() {
   createListingContainer.classList.toggle("hidden", true);
   createRequestContainer.classList.toggle("hidden", false);
 
+}
+
+function addListing() {
+  var listingTitleInput = document.getElementById("listing-title-input").value;
+  var listingClassInput = document.getElementById("listing-class-input").value;
+  var listingConditionInput = document.getElementById("listing-condition-input").value;
+  var listingPriceInput = document.getElementById("listing-price-input").value;
+  var listingContactInput = document.getElementById("listing-contact-input").value;
+  var listingUrlInput = document.getElementById("listing-url-input").value;
+
+  if(!listingTitleInput || !listingClassInput || !listingConditionInput || !listingPriceInput || !listingContactInput || !listingUrlInput) {
+    alert("You need to fill in all of the information!");
+  }
+  else {
+    var request = new XMLHttpRequest();
+
+    var requestUrl = "/addListing";
+    request.open('POST', requestUrl);
+
+    var requestBody = JSON.stringify({
+      bookTitle: listingTitleInput,
+      bookClass: listingClassInput,
+      bookCondition: listingConditionInput,
+      bookPrice: listingPriceInput,
+      contact: listingContactInput,
+      url: listingUrlInput,
+      user: username,
+      is_listing: true
+    });
+
+    request.setRequestHeader('Content-Type', 'application/json');
+
+    request.send(requestBody);
+
+    request.addEventListener('load', function (event) {
+      if(event.target.status === 200) {
+        alert("Listing created successfully!");
+
+        document.getElementById("listing-title-input").value = "";
+        document.getElementById("listing-class-input").value = "";
+        document.getElementById("listing-condition-input").value = "";
+        document.getElementById("listing-price-input").value = "";
+        document.getElementById("listing-contact-input").value = "";
+        document.getElementById("listing-url-input").value = "";
+      }
+    });
+  }
+}
+
+function addRequest() {
+  var requestTitleInput = document.getElementById("request-title-input").value;
+  var requestClassInput = document.getElementById("request-class-input").value;
+  var requestContactInput = document.getElementById("request-contact-input").value;
+  var requestUrlInput = document.getElementById("request-url-input").value;
+
+  if(!requestTitleInput || !requestClassInput || !requestContactInput || !requestUrlInput) {
+    alert("You need to fill in all of the information!");
+  }
+  else {
+    var request = new XMLHttpRequest();
+
+    var requestUrl = "/addRequest";
+    request.open('POST', requestUrl);
+
+    var requestBody = JSON.stringify({
+      bookTitle: requestTitleInput,
+      bookClass: requestClassInput,
+      contact: requestContactInput,
+      url: requestUrlInput,
+      user: username,
+      is_listing: false
+    });
+
+    request.setRequestHeader('Content-Type', 'application/json');
+
+    request.send(requestBody);
+
+    request.addEventListener('load', function (event) {
+      if(event.target.status === 200) {
+        alert("Request created successfully!");
+
+        document.getElementById("request-title-input").value = "";
+        document.getElementById("request-class-input").value = "";
+        document.getElementById("request-contact-input").value = "";
+        document.getElementById("request-url-input").value = "";
+      }
+    });
+  }
 }
 
 function adjustDOM(sortedList) {
