@@ -54,6 +54,53 @@
   </div>
 {{/if}}
 
+{{#if createPostPage}}
+  <div class="create-post-buttons-container">
+    <button type="button" class="listing-button create-post-button">Listing</button>
+    <button type="button" class="request-button create-post-button">Request</button>
+  </div>
+
+  <div class="create-listing-container create-post-container">
+    <div class="create-post-title">Listing</div>
+    <div class="input-section">
+      <span class="input-title">Book Title: </span><input type="text" id="listing-title-input">
+    </div>
+    <div class="input-section">
+      <span class="input-title">Class: </span><input type="text" id="listing-class-input">
+    </div>
+    <div class="input-section">
+      <span class="input-title">Condition: </span><input type="text" id="listing-condition-input">
+    </div>
+    <div class="input-section">
+      <span class="input-title">Price: </span><input type="text" id="listing-price-input">
+    </div>
+    <div class="input-section">
+      <span class="input-title">Contact: </span><input type="text" id="listing-contact-input">
+    </div>
+    <div class="input-section">
+      <span class="input-title">Book Image URL: </span><input type="text" id="listing-url-input">
+    </div>
+    <button type="button" class="create-listing-button">Create Listing</button>
+  </div>
+
+  <div class="create-request-container create-post-container hidden">
+    <div class="create-post-title">Request</div>
+    <div class="input-section">
+      <span class="input-title">Book Title: </span><input type="text" id="request-title-input">
+    </div>
+    <div class="input-section">
+      <span class="input-title">Class: </span><input type="text" id="request-class-input">
+    </div>
+    <div class="input-section">
+      <span class="input-title">Contact: </span><input type="text" id="request-contact-input">
+    </div>
+    <div class="input-section">
+      <span class="input-title">Book Image URL: </span><input type="text" id="request-url-input">
+    </div>
+    <button type="button" class="create-request-button">Create Request</button>
+  </div>
+{{/if}}
+
 <div class="listingsContainer">
 
     {{#each listings}}
@@ -61,7 +108,3 @@
     {{/each}}
 
 </div>
-
-{{#if logged_in}}
-  <button type="button" id="create-listing-button"><li class="fas fa-book"></i></button>
-{{/if}}

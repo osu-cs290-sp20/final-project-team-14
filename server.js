@@ -18,10 +18,11 @@ app.use(express.static('public'))
 app.get('/', function(req, res) {
 
     res.status(200).render('page', {
-        pageTitle: "Listings",
-        listings: listings_data,
-        logged_in: false,
-        aboutPage: false
+      pageTitle: "Listings",
+      listings: listings_data,
+      logged_in: false,
+      aboutPage: false,
+      createPostPage: false
     });
 
 });
@@ -32,7 +33,8 @@ app.get('/requests', function (req, res) {
     pageTitle: "Requests",
     listings: requests_data,
     logged_in: false,
-    aboutPage: false
+    aboutPage: false,
+    createPostPage: false
   });
 
 });
@@ -46,7 +48,8 @@ app.get('/listings/:user', function (req, res) {
     }),
     logged_in: true,
     user: req.params.user,
-    aboutPage: false
+    aboutPage: false,
+    createPostPage: false
   });
 
 });
@@ -60,7 +63,8 @@ app.get('/requests/:user', function (req, res) {
     }),
     logged_in: true,
     user: req.params.user,
-    aboutPage: false
+    aboutPage: false,
+    createPostPage: false
   });
 
 });
@@ -72,7 +76,8 @@ app.get('/home/:user', function (req, res) {
     listings: listings_data,
     logged_in: true,
     user: req.params.user,
-    aboutPage: false
+    aboutPage: false,
+    createPostPage: false
   });
 
 });
@@ -84,7 +89,8 @@ app.get('/homeRequests/:user', function (req, res) {
     listings: requests_data,
     logged_in: true,
     user: req.params.user,
-    aboutPage: false
+    aboutPage: false,
+    createPostPage: false
   });
 
 });
@@ -94,7 +100,8 @@ app.get('/about', function (req, res) {
   res.status(200).render('page', {
     pageTitle: "About",
     logged_in: false,
-    aboutPage: true
+    aboutPage: true,
+    createPostPage: false
   });
 
 });
@@ -105,10 +112,23 @@ app.get('/about/:user', function (req, res) {
     pageTitle: "About",
     logged_in: true,
     user: req.params.user,
-    aboutPage: true
+    aboutPage: true,
+    createPostPage: false
   });
 
 });
+
+app.get('/createPost/:user', function (req, res) {
+
+  res.status(200).render('page', {
+    pageTitle: "Create Post",
+    logged_in: true,
+    user: req.params.user,
+    aboutPage: false,
+    createPostPage: true
+  });
+
+})
 
 app.listen(port, function() {
 

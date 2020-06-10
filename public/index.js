@@ -24,6 +24,16 @@ if(logoutButton) {
   logoutButton.addEventListener('click', handleLogout);
 }
 
+var listingButton = document.querySelector(".listing-button");
+if(listingButton) {
+  listingButton.addEventListener('click', listingPostType);
+}
+
+var requestButton = document.querySelector(".request-button");
+if(requestButton) {
+  requestButton.addEventListener('click', requestPostType);
+}
+
 var searchBar = document.getElementById("navbar-search-input");
 searchBar.addEventListener('keyup', searchListings);
 
@@ -69,13 +79,33 @@ function handleLogout() {
 
 }
 
+function listingPostType() {
+
+  var createListingContainer = document.querySelector(".create-listing-container");
+  var createRequestContainer = document.querySelector(".create-request-container");
+
+  createListingContainer.classList.toggle("hidden", false);
+  createRequestContainer.classList.toggle("hidden", true);
+
+}
+
+function requestPostType() {
+
+  var createListingContainer = document.querySelector(".create-listing-container");
+  var createRequestContainer = document.querySelector(".create-request-container");
+
+  createListingContainer.classList.toggle("hidden", true);
+  createRequestContainer.classList.toggle("hidden", false);
+
+}
+
 function adjustDOM(sortedList) {
   for(var i = 0; i < sortedList.length; i++) {
     var parent = sortedList[i].parentNode;
     var removedItem = parent.removeChild(sortedList[i]);
     parent.appendChild(removedItem);
   }
-} 
+}
 
 var sortTitle = document.getElementById('sortTitle');
 if(sortTitle) {
@@ -87,7 +117,7 @@ if(sortTitle) {
       var title1 = b.getElementsByClassName('book-title')[0].textContent.substring(12).toUpperCase();
       if(title0 < title1) return -1;
       else if(title1 < title0) return 1;
-      else return 0;     
+      else return 0;
     });
     adjustDOM(listings);
   });
@@ -103,7 +133,7 @@ if(sortClass) {
       var class1 = b.getElementsByClassName('book-class')[0].textContent.substring(7);
       if(class0 < class1) return -1;
       else if(class1 < class0) return 1;
-      else return 0;     
+      else return 0;
     });
     adjustDOM(listings);
   });
@@ -119,7 +149,7 @@ if(sortPrice) {
       var price1 = b.getElementsByClassName('book-price')[0].textContent.substring(8);
       if(price0 < price1) return -1;
       else if(price1 < price0) return 1;
-      else return 0;     
+      else return 0;
     });
     adjustDOM(listings);
   });
@@ -142,7 +172,7 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-function refreshListings() { 	
+function refreshListings() {
   var container = document.getElementsByClassName('listingsContainer');
   for (var i = 0; i < listingArray.length; i++) {
     container[0].appendChild(listingArray[i]);
@@ -162,10 +192,8 @@ function searchListings() {
         continue;
       }
       else {
-        container[0].removeChild(listingArray[i]);      
+        container[0].removeChild(listingArray[i]);
       }
-    } 
-  }   
-}      
-       
-
+    }
+  }
+}
