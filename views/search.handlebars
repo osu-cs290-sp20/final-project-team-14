@@ -5,17 +5,24 @@
   {{#if logged_in}}
   <span class="loginBox">
     <span class="loginMessage">Welcome, {{user}}!</span>
-    <button type="button" id="logoutButton"><span>Log Out</span></button>
+    <button type="button" id="logoutButton"><li class="fas fa-power-off"></i></button>
   </span>
   <script>var username = "{{user}}"</script>
   <script src="/navLinks.js" charset="utf-8" defer></script>
   {{/if}}
 
   {{#unless logged_in}}
-    <span class="loginBox">
+  <script src="/unloggedNavLinks.js" charset="utf-8" defer></script>
+  <span class="loginBox">
+    <div>
       <span class="loginMessage">Please Login</span>
       <button type="button" id="loginButton"><li class="fa fa-user-circle"></i></button>
-    </span>
+    </div>
+    <div>
+      <span class="loginMessage">Or Create An Account</span>
+      <button type="button" id="createAccountButton"><li class="fa fa-id-badge"></i></button>
+    </div>
+  </span>
 
     <!-- Adapted modal from assignment 3 -->
     <div id="login-modal-backdrop" class="hidden"></div>
@@ -53,27 +60,27 @@
 	<div>
 
 		<div class="textbook-parameter">
-			Academic Year: 
+			Academic Year:
 			<input type="text" id="textbook-academicYear" class="textbookInput" placeholder="2020">
 		</div>
 
 		<div class="textbook-parameter">
-			Term: 
+			Term:
 			<input type="text" id="textbook-term" class="textbookInput" placeholder="Spring">
 		</div>
 
 		<div class="textbook-parameter">
-			Subject: 
+			Subject:
 			<input type="text" id="textbook-subject" class="textbookInput" placeholder="CS">
 		</div>
 
 		<div class="textbook-parameter">
-			Course Number: 
+			Course Number:
 			<input type="text" id="textbook-courseNumber" class="textbookInput" placeholder="290">
 		</div>
 
 		<div class="textbook-parameter textbook-optional">
-			Section (optional): 
+			Section (optional):
 			<input type="text" id="textbook-section" class="textbookInput" placeholder="">
 		</div>
 		<button tpye="button" class="textbook-button">Search</button>
