@@ -10,6 +10,9 @@
         <script src="/login_data.js" charset="utf-8"></script>
         <script src="/index.js" charset="utf-8" defer></script>
 
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+        <script src="/listingTemplate.js" charset="utf-8" defer></script>
+
     </head>
 
     <body>
@@ -24,6 +27,8 @@
                   <li class="navItem navLink"><a class="requestsLink" href ="/requests">Requests</a></li>
                   <li class="navItem navLink"><a class="myListingsLink" href ="#">My Listings</a></li>
                   <li class="navItem navLink"><a class="myRequestsLink" href ="#">My Requests</a></li>
+                  <li class="navItem navLink"><a class="createPostLink" href ="#">Create Post</a></li>
+		  <li class="navItem navLink"><a class="classSearchLink" href="/byClass">Search By Class</a></li>
                   <li class="navItem navLink"><a class="aboutLink" href ="/about">About</a></li>
                   <li class="navSearch">
                     <span class="navSort">
@@ -32,7 +37,7 @@
                       <button class="navButton sortItem" id="sortClass">Class</button>
                       <button class="navButton sortItem" id="sortPrice">Price</button>
                     </span>
-                    <input type="text" placeholder="Search...">
+                    <input type="text" id="navbar-search-input" placeholder="Search...">
                     <button type="button" class="navButton searchBooks"><i class="fas fa-search"></i></button>
                   </li>
                 </ul>

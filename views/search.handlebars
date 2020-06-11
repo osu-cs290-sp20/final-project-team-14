@@ -1,0 +1,94 @@
+
+<div class="pageHeader">
+
+  <span class="pageTitle">{{pageTitle}}</span>
+  {{#if logged_in}}
+  <span class="loginBox">
+    <span class="loginMessage">Welcome, {{user}}!</span>
+    <button type="button" id="logoutButton"><span>Log Out</span></button>
+  </span>
+  <script>var username = "{{user}}"</script>
+  <script src="/navLinks.js" charset="utf-8" defer></script>
+  {{/if}}
+
+  {{#unless logged_in}}
+    <span class="loginBox">
+      <span class="loginMessage">Please Login</span>
+      <button type="button" id="loginButton"><li class="fa fa-user-circle"></i></button>
+    </span>
+
+    <!-- Adapted modal from assignment 3 -->
+    <div id="login-modal-backdrop" class="hidden"></div>
+    <div id="login-modal" class="hidden">
+      <div class="login-modal-dialog">
+
+        <div class="login-modal-header">
+          <h3>Login</h3>
+          <button type="button" class="login-modal-close-button">&times;</button>
+        </div>
+
+        <div class="login-modal-body">
+          <div class="login-input-element">
+            <label for="login-username-input">Username</label>
+            <input id="login-username-input"></input>
+          </div>
+          <div class="login-input-element">
+            <label for="login-password-input">Password</label>
+            <input type="text" id="login-password-input">
+          </div>
+        </div>
+
+        <div class="login-modal-footer">
+          <button type="button" class="login-modal-cancel-button">Cancel</button>
+          <button type="button" class="login-modal-accept-button">Login</button>
+        </div>
+
+      </div>
+    </div>
+  {{/unless}}
+</div>
+
+
+{{#if keys_exist}}
+	<div>
+
+		<div class="textbook-parameter">
+			Academic Year: 
+			<input type="text" id="textbook-academicYear" class="textbookInput" placeholder="2020">
+		</div>
+
+		<div class="textbook-parameter">
+			Term: 
+			<input type="text" id="textbook-term" class="textbookInput" placeholder="Spring">
+		</div>
+
+		<div class="textbook-parameter">
+			Subject: 
+			<input type="text" id="textbook-subject" class="textbookInput" placeholder="CS">
+		</div>
+
+		<div class="textbook-parameter">
+			Course Number: 
+			<input type="text" id="textbook-courseNumber" class="textbookInput" placeholder="290">
+		</div>
+
+		<div class="textbook-parameter textbook-optional">
+			Section (optional): 
+			<input type="text" id="textbook-section" class="textbookInput" placeholder="">
+		</div>
+		<button tpye="button" class="textbook-button">Search</button>
+
+	</div>
+
+	<div>
+		{{text}}
+	</div>
+{{/if}}
+{{#unless keys_exist}}
+	<h2>API keys are not in server's local files, contact lesherg@oregonstate.edu for the API keys.</h2>
+{{/unless}}
+<div class="listingContainer">
+	{{#each entries}}
+		{{> apiEntry}}
+	{{/each}}
+</div>
