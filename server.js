@@ -5,9 +5,7 @@ var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
 
 var HttpOAuth2 = new XMLHttpRequest();
-var HttpTextbook = new XMLHttpRequest();
 var oAuth2URL = "https://api.oregonstate.edu/oauth2/token";
-var textbookURL = "https://api.oregonstate.edu/v1/textbooks?academicYear=2019&term=Fall&subject=CS&courseNumber=161";
 
 
 var app = express();
@@ -126,7 +124,6 @@ app.get('/byClass', function (req, res) {
 		text: "Response from the textbook api give a 500 Internal server error response, so here is the OAuth2 call response instead:  \n" +  HttpOAuth2.responseText,
 		pageTitle: "Class Search",
 		logged_in: false,
-		listings: ""
 	});	
 });
 
@@ -142,7 +139,6 @@ app.get('/byClass/:user', function (req, res) {
 		pageTitle: "Class Search",
 		logged_in: true,
 		user: req.params.user,
-		listings: ""
 	});	
 });
 

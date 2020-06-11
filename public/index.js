@@ -1,4 +1,15 @@
 listingArray = [];
+//Was for API integration
+var HttpOAuth2 = new XMLHttpRequest();
+var HttpTextbook = new XMLHttpRequest();
+var oAuth2URL = "https://api.oregonstate.edu/oauth2/token";
+var key_data;
+try{
+	key_data = require("../keys.json");
+} catch (error){
+	key_data = "";
+}
+
 
 var loginButton = document.getElementById("loginButton");
 if(loginButton) {
@@ -47,8 +58,9 @@ if(createRequestButton) {
 var searchBar = document.getElementById("navbar-search-input");
 searchBar.addEventListener('keyup', searchListings);
 
-var textbookSearchButton = document.querySelector("#textbook-button");
+var textbookSearchButton = document.getElementsByClassName("textbook-button");
 if(textbookSearchButton){
+  textbookSearchButton = textbookSearchButton[0];
   textbookSearchButton.addEventListener('click', searchAPI);
 }
 
@@ -304,5 +316,45 @@ function searchListings() {
 
 
 function searchAPI() {
+	var searchTerms = document.getElementsByClassName('textbook-parameter');
+	for(var i = 0; i < searchTerms.length-1; i++){ //Goes through all required parameters
+		//console.log(searchTerms[i].childNodes);
+		if(searchTerms[i].childNodes[1].value == ""){
+			alert("One or more required boxes does not have a value");
+			return;
+		}
+	}
+	var requestData = ({
+		"academicYear" : searchTerms[0].childNodes[1].value,	
+		"term" : searchTerms[1].childNodes[1].value,	
+		"subject" : searchTerms[2].childNodes[1].value,	
+		"courseNumber" : searchTerms[3].childNodes[1].value	
+	});
+	if(searchTerms[4].childNodes[1].value != ""){
+		requestData.append({"section" : searchTerms[4].childNodes[1].value});
+	}
+
 	//will not work because textbook server responds with error: 500	
+	var container = document.getElementsByClassName('listingContainer');
+	console.log(container);
+	
+
+	//THIS CODE IS AN EXAMPLE ON HOW IT WOULD WORK, IT DOES NOT IF UNCOMMENTED
+	//HttpOAuth2.open("POST", oAuth2URL, false);
+	//HttpOAuth2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+	//HttpOAuth2.send( "client_id=" + key_data["consumerKey"] + "&client_secret=" + key_data["consumerSecret"] + "&grant_type=client_credentials");
+	//var access_token = JSON.parse(HttpOAuth2.responseText)["access_token"];
+	//DO API CALL HERE (DOESN"T WANT TO ACTUALLY DO THE API CALL WHICH IS SUPER ANNOYING
+	//CONTEXT TO GO IN THIS VARIABLE
+	//HttpTextbook.setRequestHeader("Authorization: Bearer " + access_token);"
+	//HttpTextbook.send(requestData);
+
+	var context = ({
+		"bookTitle" : "Placeholder Title",
+		"bookClass" : "MTH",
+		"bookDescription" : "Placeholder book because api does not work"
+	});
+	var entry = Handlebars.templates.entry(context);
+	container[0].insertAdjacentHTML('beforeend', entry);
+	
 }
