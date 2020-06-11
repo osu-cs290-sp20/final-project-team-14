@@ -81,14 +81,13 @@
 	</div>
 
 	<div>
-		{{text}}
 	</div>
 {{/if}}
 {{#unless keys_exist}}
 	<h2>API keys are not in server's local files, contact lesherg@oregonstate.edu for the API keys.</h2>
 {{/unless}}
 <div class="listingContainer">
-	{{#each entries}}
-		{{> apiEntry}}
-	{{/each}}
 </div>
+<h3>
+	{{text}}
+</h3>

@@ -429,3 +429,23 @@ input:focus {
 .login-modal-footer .login-modal-accept-button:hover {
   background-color: orange;
 }
+
+.textbook-parameter {
+  width: 400px;
+  padding: 10px;
+  margin: 10px;
+  background-color: darkorange;
+  border-radius: 5px
+}
+
+.textbook-button {
+  font-size: 15px;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 20px;
+  cursor: pointer;
+
+}
