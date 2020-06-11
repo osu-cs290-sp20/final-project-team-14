@@ -4,9 +4,10 @@ var fs = require('fs');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
 
-var Http = new XMLHttpRequest();
+var HttpOAuth2 = new XMLHttpRequest();
+var HttpTextbook = new XMLHttpRequest();
 var oAuth2URL = "https://api.oregonstate.edu/oauth2/token";
-var textbookURL = "https://api.oregonstate.edu/v1/textbooks";
+var textbookURL = "https://api.oregonstate.edu/v1/textbooks?academicYear=2019&term=Fall&subject=CS&courseNumber=161";
 
 
 var app = express();
@@ -22,19 +23,21 @@ try{
 	key_data = "";
 }
 
-Http.open("POST", oAuth2URL, true);
-var requestData = "client_id=" + key_data["consumerKey"] + "&client_secret=" + key_data["consumerSecret"] + "&grant_type=client_credentials";
 
-Http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+
+HttpOAuth2.open("POST", oAuth2URL, false);
+HttpOAuth2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
  
-Http.send(requestData);
-
-Http.onreadystatechange=(e)=>{
-	console.log(Http.responseText);
-}
+HttpTextbook.open("GET", textbookURL, false);
 
 
-
+HttpOAuth2.send( "client_id=" + key_data["consumerKey"] + "&client_secret=" + key_data["consumerSecret"] + "&grant_type=client_credentials");
+//console.log("Authorization: Bearer " + JSON.parse(HttpOAuth2.responseText)["access_token"]);
+HttpTextbook.setRequestHeader("Authorization", "Bearer " + JSON.parse(HttpOAuth2.responseText)["access_token"]);
+//	HttpTextbook.setRequestHeader("Authorization", "Bearer 7rhD17HZ8XFG4HfbsrnkUdhET14W");
+//HttpTextbook.send("academicYear=2019&term=fall&subject=cs&courseNumber=161");
+HttpTextbook.send();
+console.log(HttpTextbook.responseText);
 
 app.engine('handlebars', exphbs({
     defaultLayout: 'main'
@@ -124,6 +127,23 @@ app.get('/homeRequests/:user', function (req, res) {
   });
 
 });
+
+
+app.get('/byClass', function (req, res) {
+	HttpOAuth2.send( "client_id=" + key_data["consumerKey"] + "&client_secret=" + key_data["consumerSecret"] + "&grant_type=client_credentials");
+	//console.log("Authorization: Bearer " + JSON.parse(HttpOAuth2.responseText)["access_token"]);
+	HttpTextbook.setRequestHeader("Authorization", "Bearer " + JSON.parse(HttpOAuth2.responseText)["access_token"]);
+//	HttpTextbook.setRequestHeader("Authorization", "Bearer 7rhD17HZ8XFG4HfbsrnkUdhET14W");
+	HttpTextbook.send("academicYear=2019&term=fall&subject=cs&courseNumber=161");
+	//HttpTextbook.send();
+	res.status(200).render('search', {
+	  text: HttpTextbook.responseText,
+	  listings: ""
+	});	
+});
+
+HttpOAuth2.onreadystatechange
+
 
 app.get('/about', function (req, res) {
 

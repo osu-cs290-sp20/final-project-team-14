@@ -1,0 +1,38 @@
+<div>
+	<div class="textbook-parameter">
+		Academic Year: 
+		<input type="text" id="textbook-academicYear" class="textbookInput" placeholder="2020">
+	</div>
+
+	<div class="textbook-parameter">
+		Term: 
+		<input type="text" id="textbook-term" class="textbookInput" placeholder="Spring">
+	</div>
+
+	<div class="textbook-parameter">
+		Subject: 
+		<input type="text" id="textbook-subject" class="textbookInput" placeholder="CS">
+	</div>
+
+	<div class="textbook-parameter">
+		Course Number: 
+		<input type="text" id="textbook-courseNumber" class="textbookInput" placeholder="290">
+	</div>
+
+	<div class="textbook-parameter textbook-optional">
+		Section (optional): 
+		<input type="text" id="textbook-section" class="textbookInput" placeholder="">
+	</div>
+	<button tpye="button" class="textbook-button">Search</button>
+
+</div>
+
+<div>
+	{{text}}
+</div>
+
+<div class="listingContainer">
+	{{#each entries}}
+		{{> apiEntry}}
+	{{/each}}
+</div>
