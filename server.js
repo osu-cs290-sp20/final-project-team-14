@@ -307,7 +307,7 @@ app.post('/createAccount', function (req, res, next) {
 });
 
 app.get('*', function (req, res, next) {
-	res.status(200).render('page', {
+	res.status(404).render('page', {
 		pageTitle: "404: Page Not Found",
 		logged_in: false,
 		aboutPage: false,
