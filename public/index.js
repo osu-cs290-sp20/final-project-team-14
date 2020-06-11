@@ -47,6 +47,12 @@ if(createRequestButton) {
 var searchBar = document.getElementById("navbar-search-input");
 searchBar.addEventListener('keyup', searchListings);
 
+var textbookSearchButton = document.querySelector("#textbook-button");
+if(textbookSearchButton){
+  textbookSearchButton.addEventListener('click', searchAPI);
+}
+
+
 function toggleLoginModal() {
 
   var modal = document.getElementById("login-modal");
@@ -294,4 +300,9 @@ function searchListings() {
       }
     }
   }
+}
+
+
+function searchAPI() {
+	//will not work because textbook server responds with error: 500	
 }

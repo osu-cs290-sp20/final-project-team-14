@@ -1,12 +1,29 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
 var fs = require('fs');
+var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+
+
+var HttpOAuth2 = new XMLHttpRequest();
+var HttpTextbook = new XMLHttpRequest();
+var oAuth2URL = "https://api.oregonstate.edu/oauth2/token";
+var textbookURL = "https://api.oregonstate.edu/v1/textbooks?academicYear=2019&term=Fall&subject=CS&courseNumber=161";
+
 
 var app = express();
 var port = process.env.port || 3000;
 
 var listings_data = require("./book_data/listings.json");
 var requests_data = require("./book_data/requests.json");
+
+var key_data;
+try{
+	key_data = require("./keys.json");
+} catch (error){
+	key_data = "";
+}
+
+
 
 app.engine('handlebars', exphbs({
     defaultLayout: 'main'
@@ -96,6 +113,39 @@ app.get('/homeRequests/:user', function (req, res) {
   });
 
 });
+
+
+app.get('/byClass', function (req, res) {
+	if(key_data != ""){
+		HttpOAuth2.open("POST", oAuth2URL, false);
+		HttpOAuth2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+		HttpOAuth2.send( "client_id=" + key_data["consumerKey"] + "&client_secret=" + key_data["consumerSecret"] + "&grant_type=client_credentials");
+	}
+	res.status(200).render('search', {
+		keys_exist: key_data != "",
+		text: "Response from the textbook api give a 500 Internal server error response, so here is the OAuth2 call response instead:  \n" +  HttpOAuth2.responseText,
+		pageTitle: "Class Search",
+		logged_in: false,
+		listings: ""
+	});	
+});
+
+app.get('/byClass/:user', function (req, res) {
+	if(key_data != ""){
+		HttpOAuth2.open("POST", oAuth2URL, false);
+		HttpOAuth2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+		HttpOAuth2.send( "client_id=" + key_data["consumerKey"] + "&client_secret=" + key_data["consumerSecret"] + "&grant_type=client_credentials");
+	}
+	res.status(200).render('search', {
+		keys_exist: key_data != "",
+		text: "Response from the textbook api give a 500 Internal server error response, so here is the OAuth2 call response instead:  \n" +  HttpOAuth2.responseText,
+		pageTitle: "Class Search",
+		logged_in: true,
+		user: req.params.user,
+		listings: ""
+	});	
+});
+
 
 app.get('/about', function (req, res) {
 
