@@ -59,9 +59,8 @@ var searchBar = document.getElementById("navbar-search-input");
 searchBar.addEventListener('keyup', searchListings);
 
 var textbookSearchButton = document.getElementsByClassName("textbook-button");
-if(textbookSearchButton){
-  textbookSearchButton = textbookSearchButton[0];
-  textbookSearchButton.addEventListener('click', searchAPI);
+if(textbookSearchButton[0]){
+  textbookSearchButton[0].addEventListener('click', searchAPI);
 }
 
 
@@ -300,6 +299,7 @@ function refreshListings() {
 }
 
 function searchListings() {
+	console.log("Test");
   var container = document.getElementsByClassName('listingsContainer');
   var searchInput = document.getElementById('navbar-search-input').value;
   refreshListings();
