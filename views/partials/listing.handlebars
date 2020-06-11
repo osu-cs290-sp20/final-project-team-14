@@ -13,5 +13,8 @@
       <p class="contact content-text">Contact: {{contact}}</p>
     </div>
     <img class="book-img" src="{{url}}" />
+    {{#if is_personal_post}}
+    <button type="button" class="deletePostButton">Delete Post</button>
+    {{/if}}
   </div>
 </div>

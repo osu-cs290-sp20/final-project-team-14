@@ -64,11 +64,23 @@ p {
   width: 30px;
   height: 30px;
   background-color: darkorange;
+  margin-right: 50px;
+
+}
+
+#createAccountButton {
+
+  font-size: 20px;
+  border-radius: 20px;
+  border: 2px solid black;
+  width: 30px;
+  height: 30px;
+  background-color: darkorange;
 
 }
 
 #logoutButton {
-  
+
   font-size: 20px;
   border-radius: 20px;
   border: 2px solid black;
@@ -149,6 +161,7 @@ p {
 
     padding: 5px;
     display: flex;
+    flex-wrap: wrap;
 
 }
 
@@ -326,6 +339,16 @@ input:focus {
 
 }
 
+.deletePostButton {
+
+  background-color: darkorange;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 2px;
+  display: block;
+
+}
+
 /* Adapted modal styling from assignment 3 */
 #login-modal-backdrop {
   position: fixed;
@@ -438,6 +461,141 @@ input:focus {
 }
 
 .login-modal-footer .login-modal-accept-button:hover {
+  background-color: orange;
+}
+
+.textbook-parameter {
+  width: 400px;
+  padding: 10px;
+  margin: 10px;
+  background-color: darkorange;
+  border-radius: 5px
+}
+
+.textbook-button {
+  font-size: 15px;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 20px;
+  cursor: pointer;
+
+}
+
+/* Create Account Modal */
+#create-account-modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+#create-account-modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1010;
+  overflow: scroll;
+}
+
+.hidden {
+  display: none;
+}
+
+.create-account-modal-dialog {
+  width: auto;
+  max-width: 400px;
+  min-width: 300px;
+  min-height: 100px;
+  margin: 40px auto;
+  background-color: #fff;
+  border-radius: 15px;
+}
+
+.create-account-modal-header {
+  position: relative;
+  padding: 10px 20px;
+}
+
+.create-account-modal-header h3 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.create-account-modal-close-button {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 24px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.create-account-modal-body {
+  padding: 20px;
+}
+
+.create-account-input-element {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.create-account-input-element label {
+  font-weight: 600;
+  flex: 1 75px;
+  margin-right: 10px;
+}
+
+.create-account-input-element input,
+.create-account-input-element textarea {
+  flex: 6 200px;
+  padding: 8px;
+  font-size: 20px;
+  border: 1px solid #aaa;
+}
+
+.create-account-input-element textarea {
+  min-height: 64px;
+}
+
+.create-account-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 10px 20px 10px;
+}
+
+.create-account-modal-footer button {
+  font-size: 15px;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 5px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.create-account-modal-footer .create-account-modal-cancel-button:hover {
+  background-color: #eee;
+}
+
+.create-account-modal-footer .create-account-modal-accept-button {
+  background-color: darkorange;
+  color: #fff;
+}
+
+.create-account-modal-footer .create-account-modal-accept-button:hover {
   background-color: orange;
 }
 

@@ -12,9 +12,16 @@
   {{/if}}
 
   {{#unless logged_in}}
+    <script src="/unloggedNavLinks.js" charset="utf-8" defer></script>
     <span class="loginBox">
-      <span class="loginMessage">Please Login</span>
-      <button type="button" id="loginButton"><li class="fa fa-user-circle"></i></button>
+      <div>
+        <span class="loginMessage">Please Login</span>
+        <button type="button" id="loginButton"><li class="fa fa-user-circle"></i></button>
+      </div>
+      <div>
+        <span class="loginMessage">Or Create An Account</span>
+        <button type="button" id="createAccountButton"><li class="fa fa-id-badge"></i></button>
+      </div>
     </span>
 
     <!-- Adapted modal from assignment 3 -->
@@ -41,6 +48,35 @@
         <div class="login-modal-footer">
           <button type="button" class="login-modal-cancel-button">Cancel</button>
           <button type="button" class="login-modal-accept-button">Login</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Create Account Modal -->
+    <div id="create-account-modal-backdrop" class="hidden"></div>
+    <div id="create-account-modal" class="hidden">
+      <div class="create-account-modal-dialog">
+
+        <div class="create-account-modal-header">
+          <h3>Create an Account</h3>
+          <button type="button" class="create-account-modal-close-button">&times;</button>
+        </div>
+
+        <div class="create-account-modal-body">
+          <div class="create-account-input-element">
+            <label for="create-account-username-input">Username</label>
+            <input id="create-account-username-input"></input>
+          </div>
+          <div class="create-account-input-element">
+            <label for="create-account-password-input">Password</label>
+            <input type="text" id="create-account-password-input">
+          </div>
+        </div>
+
+        <div class="create-account-modal-footer">
+          <button type="button" class="create-account-modal-cancel-button">Cancel</button>
+          <button type="button" class="create-account-modal-accept-button">Create Account</button>
         </div>
 
       </div>

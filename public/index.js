@@ -16,6 +16,11 @@ if(loginButton) {
   loginButton.addEventListener('click', toggleLoginModal);
 }
 
+var createAccountButton = document.getElementById("createAccountButton");
+if(createAccountButton) {
+  createAccountButton.addEventListener('click', toggleCreateAccountModal);
+}
+
 var loginModalCloseButton = document.querySelector(".login-modal-close-button");
 if(loginModalCloseButton) {
   loginModalCloseButton.addEventListener('click',toggleLoginModal);
@@ -25,9 +30,23 @@ if(loginModalCancelButton) {
   loginModalCancelButton.addEventListener('click',toggleLoginModal);
 }
 
+var createAccountModalCloseButton = document.querySelector(".create-account-modal-close-button");
+if(createAccountModalCloseButton) {
+  createAccountModalCloseButton.addEventListener('click',toggleCreateAccountModal);
+}
+var createAccountModalCancelButton = document.querySelector(".create-account-modal-cancel-button");
+if(createAccountModalCancelButton) {
+  createAccountModalCancelButton.addEventListener('click',toggleCreateAccountModal);
+}
+
 var loginModalAcceptButton = document.querySelector(".login-modal-accept-button");
 if(loginModalAcceptButton) {
   loginModalAcceptButton.addEventListener('click', handleLogin);
+}
+
+var createAccountModalAcceptButton = document.querySelector(".create-account-modal-accept-button");
+if(createAccountModalAcceptButton) {
+  createAccountModalAcceptButton.addEventListener('click', handleCreateAccount);
 }
 
 var logoutButton = document.getElementById("logoutButton");
@@ -63,6 +82,75 @@ if(textbookSearchButton[0]){
   textbookSearchButton[0].addEventListener('click', searchAPI);
 }
 
+var deletePostButtons = document.getElementsByClassName("deletePostButton");
+if(deletePostButtons) {
+  for(var i = 0; i<deletePostButtons.length; i++) {
+    deletePostButtons[i].addEventListener('click', handleDeletePost);
+  }
+}
+
+function handleDeletePost(event) {
+  var is_listing;
+  if(window.location.pathname[1] == "l") {
+    is_listing = true;
+  } else {
+    is_listing = false;
+  }
+
+  var bookTitle = event.target.parentNode.querySelector(".book-title").textContent.substr(12);
+  var bookClass = event.target.parentNode.querySelector(".book-class").textContent.substr(7);
+  if(is_listing) {
+    var bookCondition = event.target.parentNode.querySelector(".book-condition").textContent.substr(11);
+    var bookPrice = event.target.parentNode.querySelector(".book-price").textContent.substr(8);
+  }
+  var contact = event.target.parentNode.querySelector(".contact").textContent.substr(9);
+  var url = event.target.parentNode.querySelector(".book-img").getAttribute("src");
+
+  if(is_listing) {
+    var post = {
+      bookTitle,
+      bookClass,
+      bookCondition,
+      bookPrice,
+      contact,
+      url,
+      user: window.location.pathname.substr(10),
+      is_listing: true,
+      is_personal_post: false
+    }
+  }
+  else {
+    var post = {
+      bookTitle,
+      bookClass,
+      contact,
+      url,
+      user: window.location.pathname.substr(10),
+      is_listing: false,
+      is_personal_post: false
+    }
+  }
+
+  var request = new XMLHttpRequest();
+
+  var requestUrl = "/deletePost";
+  request.open('POST', requestUrl);
+
+  var requestBody = JSON.stringify(post);
+
+  request.setRequestHeader('Content-Type', 'application/json');
+
+  request.send(requestBody);
+
+  request.addEventListener('load', function (event_) {
+    if(event_.target.status === 200) {
+      alert("Successfully deleted post!");
+
+      event.target.parentNode.parentNode.remove();
+    }
+  });
+}
+
 
 function toggleLoginModal() {
 
@@ -75,6 +163,20 @@ function toggleLoginModal() {
   loginUserInput.value = "";
   var loginPasswordInput = document.getElementById("login-password-input");
   loginPasswordInput.value = "";
+
+}
+
+function toggleCreateAccountModal() {
+
+  var modal = document.getElementById("create-account-modal");
+  modal.classList.toggle("hidden");
+  var modalBackdrop = document.getElementById("create-account-modal-backdrop");
+  modalBackdrop.classList.toggle("hidden");
+
+  var createAccountUserInput = document.getElementById("create-account-username-input");
+  createAccountUserInput.value = "";
+  var createAccountPasswordInput = document.getElementById("create-account-password-input");
+  createAccountPasswordInput.value = "";
 
 }
 
@@ -96,6 +198,44 @@ function handleLogin() {
   }
   else {
     window.location.href = "/home/" + usernameInputValue;
+  }
+
+}
+
+function handleCreateAccount() {
+
+  var usernameInput = document.getElementById("create-account-username-input");
+  var usernameInputValue = usernameInput.value;
+  var passwordInput = document.getElementById("create-account-password-input");
+  var passwordInputValue = passwordInput.value;
+
+  if(usernameInputValue === "" || passwordInputValue === "") {
+    window.alert("You must enter a username and a password!");
+  }
+  else if(login_data[usernameInputValue]){
+    window.alert("Username already taken!");
+  }
+  else {
+    login_data[usernameInputValue] = passwordInputValue;
+
+    var request = new XMLHttpRequest();
+
+    var requestUrl = "/createAccount";
+    request.open('POST', requestUrl);
+
+    var requestBody = JSON.stringify(login_data);
+
+    request.setRequestHeader('Content-Type', 'application/json');
+
+    request.send(requestBody);
+
+    request.addEventListener('load', function (event) {
+      if(event.target.status === 200) {
+        alert("Account created successfully!");
+
+        window.location.href = "/home/" + usernameInputValue;
+      }
+    });
   }
 
 }
@@ -279,11 +419,11 @@ function parseListing(elem) {
     var listPrice = elem.getElementsByClassName("book-price")[0].textContent.trim().replace("Price: $","").toLowerCase();
     var text = listTitle + " " + listClass + " " + listCon + " " + listPrice + " " + listContact;
     return text;
-  } 
+  }
   var text = listTitle + " " + listClass + " " + listContact;
   return text;
 }
- 
+
 window.addEventListener('DOMContentLoaded', function() {
   var listHTML = document.getElementsByClassName('bookListing');
   for (var i = 0; i < listHTML.length; i++) {
@@ -329,19 +469,19 @@ function searchAPI() {
 		}
 	}
 	var requestData = ({
-		"academicYear" : searchTerms[0].childNodes[1].value,	
-		"term" : searchTerms[1].childNodes[1].value,	
-		"subject" : searchTerms[2].childNodes[1].value,	
-		"courseNumber" : searchTerms[3].childNodes[1].value	
+		"academicYear" : searchTerms[0].childNodes[1].value,
+		"term" : searchTerms[1].childNodes[1].value,
+		"subject" : searchTerms[2].childNodes[1].value,
+		"courseNumber" : searchTerms[3].childNodes[1].value
 	});
 	if(searchTerms[4].childNodes[1].value != ""){
 		requestData.append({"section" : searchTerms[4].childNodes[1].value});
 	}
 
-	//will not work because textbook server responds with error: 500	
+	//will not work because textbook server responds with error: 500
 	var container = document.getElementsByClassName('listingContainer');
 	console.log(container);
-	
+
 
 	//THIS CODE IS AN EXAMPLE ON HOW IT WOULD WORK, IT DOES NOT IF UNCOMMENTED
 	//HttpOAuth2.open("POST", oAuth2URL, false);
@@ -360,5 +500,5 @@ function searchAPI() {
 	});
 	var entry = Handlebars.templates.entry(context);
 	container[0].insertAdjacentHTML('beforeend', entry);
-	
+
 }
