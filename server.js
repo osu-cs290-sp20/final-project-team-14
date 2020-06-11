@@ -139,7 +139,7 @@ app.get('/byClass', function (req, res) {
 	res.status(200).render('search', {
 		keys_exist: key_data != "",
 		text: "Response from the textbook api give a 500 Internal server error response, so here is the OAuth2 call response instead:  \n" +  HttpOAuth2.responseText,
-		pageTitle: "Class Search",
+		pageTitle: "Class Search (With OSU API)",
 		logged_in: false,
 	});
 });
@@ -153,7 +153,7 @@ app.get('/byClass/:user', function (req, res) {
 	res.status(200).render('search', {
 		keys_exist: key_data != "",
 		text: "Response from the textbook api give a 500 Internal server error response, so here is the OAuth2 call response instead:  \n" +  HttpOAuth2.responseText,
-		pageTitle: "Class Search",
+		pageTitle: "Class Search (With OSU API)",
 		logged_in: true,
 		user: req.params.user,
 	});
