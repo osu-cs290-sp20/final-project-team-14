@@ -304,5 +304,5 @@ function searchListings() {
 
 
 function searchAPI() {
-	
+	//will not work because textbook server responds with error: 500	
 }

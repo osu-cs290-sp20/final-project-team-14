@@ -25,20 +25,6 @@ try{
 
 
 
-HttpOAuth2.open("POST", oAuth2URL, false);
-HttpOAuth2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
- 
-HttpTextbook.open("GET", textbookURL, false);
-
-
-HttpOAuth2.send( "client_id=" + key_data["consumerKey"] + "&client_secret=" + key_data["consumerSecret"] + "&grant_type=client_credentials");
-//console.log("Authorization: Bearer " + JSON.parse(HttpOAuth2.responseText)["access_token"]);
-HttpTextbook.setRequestHeader("Authorization", "Bearer " + JSON.parse(HttpOAuth2.responseText)["access_token"]);
-//	HttpTextbook.setRequestHeader("Authorization", "Bearer 7rhD17HZ8XFG4HfbsrnkUdhET14W");
-//HttpTextbook.send("academicYear=2019&term=fall&subject=cs&courseNumber=161");
-HttpTextbook.send();
-console.log(HttpTextbook.responseText);
-
 app.engine('handlebars', exphbs({
     defaultLayout: 'main'
 }));
@@ -130,19 +116,35 @@ app.get('/homeRequests/:user', function (req, res) {
 
 
 app.get('/byClass', function (req, res) {
-	HttpOAuth2.send( "client_id=" + key_data["consumerKey"] + "&client_secret=" + key_data["consumerSecret"] + "&grant_type=client_credentials");
-	//console.log("Authorization: Bearer " + JSON.parse(HttpOAuth2.responseText)["access_token"]);
-	HttpTextbook.setRequestHeader("Authorization", "Bearer " + JSON.parse(HttpOAuth2.responseText)["access_token"]);
-//	HttpTextbook.setRequestHeader("Authorization", "Bearer 7rhD17HZ8XFG4HfbsrnkUdhET14W");
-	HttpTextbook.send("academicYear=2019&term=fall&subject=cs&courseNumber=161");
-	//HttpTextbook.send();
+	if(key_data != ""){
+		HttpOAuth2.open("POST", oAuth2URL, false);
+		HttpOAuth2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+		HttpOAuth2.send( "client_id=" + key_data["consumerKey"] + "&client_secret=" + key_data["consumerSecret"] + "&grant_type=client_credentials");
+	}
 	res.status(200).render('search', {
-	  text: HttpTextbook.responseText,
-	  listings: ""
+		keys_exist: key_data != "",
+		text: "Response from the textbook api give a 500 Internal server error response, so here is the OAuth2 call response instead:  \n" +  HttpOAuth2.responseText,
+		pageTitle: "Class Search",
+		logged_in: false,
+		listings: ""
 	});	
 });
 
-HttpOAuth2.onreadystatechange
+app.get('/byClass/:user', function (req, res) {
+	if(key_data != ""){
+		HttpOAuth2.open("POST", oAuth2URL, false);
+		HttpOAuth2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+		HttpOAuth2.send( "client_id=" + key_data["consumerKey"] + "&client_secret=" + key_data["consumerSecret"] + "&grant_type=client_credentials");
+	}
+	res.status(200).render('search', {
+		keys_exist: key_data != "",
+		text: "Response from the textbook api give a 500 Internal server error response, so here is the OAuth2 call response instead:  \n" +  HttpOAuth2.responseText,
+		pageTitle: "Class Search",
+		logged_in: true,
+		user: req.params.user,
+		listings: ""
+	});	
+});
 
 
 app.get('/about', function (req, res) {
