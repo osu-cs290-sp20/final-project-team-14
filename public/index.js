@@ -274,13 +274,17 @@ if(sortPrice) {
 function parseListing(elem) {
   var listTitle = elem.getElementsByClassName("book-title")[0].textContent.trim().replace("Book Title: ","").toLowerCase();
   var listClass = elem.getElementsByClassName("book-class")[0].textContent.trim().replace("Class: ","").toLowerCase();
-  var listCon = elem.getElementsByClassName("book-condition")[0].textContent.trim().replace("Condition: ","").toLowerCase();
-  var listPrice = elem.getElementsByClassName("book-price")[0].textContent.trim().replace("Price: $","").toLowerCase();
   var listContact = elem.getElementsByClassName("contact")[0].textContent.trim().replace("Contact: ","").toLowerCase();
-  var text = listTitle + " " + listClass + " " + listCon + " " + listPrice + " " + listContact;
+  if (elem.getElementsByClassName("book-condition").length == 1) {
+    var listCon = elem.getElementsByClassName("book-condition")[0].textContent.trim().replace("Condition: ","").toLowerCase();
+    var listPrice = elem.getElementsByClassName("book-price")[0].textContent.trim().replace("Price: $","").toLowerCase();
+    var text = listTitle + " " + listClass + " " + listCon + " " + listPrice + " " + listContact;
+    return text;
+  } 
+  var text = listTitle + " " + listClass + " " + listContact;
   return text;
 }
-
+ 
 window.addEventListener('DOMContentLoaded', function() {
   var listHTML = document.getElementsByClassName('bookListing');
   for (var i = 0; i < listHTML.length; i++) {

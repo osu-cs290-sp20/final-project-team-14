@@ -67,6 +67,17 @@ p {
 
 }
 
+#logoutButton {
+  
+  font-size: 20px;
+  border-radius: 20px;
+  border: 2px solid black;
+  width: 30px;
+  height: 30px;
+  background-color: darkorange;
+
+ }
+
 .titleBar {
 
     padding: 15px;
